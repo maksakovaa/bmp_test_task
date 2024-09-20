@@ -9,8 +9,8 @@
 Ваш класс должен инкапсулировать все необходимые данные по открытию и отображению картинки, а также 3 главные функции приложения:
 openBMP(const string & fileName), displayBMP(), closeBMP(). Описание формата BMP просьба найти самостоятельно в интернет.
 Просьба не использовать готовые библиотеки по чтению BMP картинок, это должно делать ваше приложение.
-
 */
+
 #include "bitmap.h"
 #include <iostream>
 
@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
     }
     else
     {
-        char* file = argv[argc - 1];
         BitMapHandler bmpHandler;
         bmpHandler.openBMP(argv[argc - 1]);
         bmpHandler.displayBMP();
