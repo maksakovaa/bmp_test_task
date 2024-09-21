@@ -1,5 +1,16 @@
 #include "bitmap.h"
 
+BitMapHandler::BitMapHandler(const std::string& fileName)
+{
+    openBMP(fileName);
+    displayBMP();
+}
+
+BitMapHandler::~BitMapHandler()
+{
+    closeBMP();
+}
+
 void BitMapHandler::openBMP(const std::string &fileName)
 {
     bitmap = std::ifstream(fileName, std::ios::binary);
@@ -10,7 +21,6 @@ void BitMapHandler::openBMP(const std::string &fileName)
         {
             bitmap.read((char*)&m_info, sizeof(m_info));
 
-            //read
             image.resize(m_info.Height);
             unsigned int bufer;
             int linePadding = ((m_info.Width * (m_info.BitCount / 8)) % 4) & 3;
@@ -38,8 +48,7 @@ void BitMapHandler::openBMP(const std::string &fileName)
         }
         else
         {
-            std::cout << "File " << fileName << " isn't bitmap image@" << std::endl;
-            return;
+            throw std::runtime_error("File " + fileName + " isn't bitmap image");
         }
 
     }   
@@ -47,9 +56,12 @@ void BitMapHandler::openBMP(const std::string &fileName)
 
 void BitMapHandler::displayBMP()
 {
-    for (auto i : image)
+    if (bitmap.is_open())
     {
-        std::cout << i << std::endl;
+        for (auto i : image)
+        {
+            std::cout << i << std::endl;
+        }
     }
 }
 
@@ -58,6 +70,7 @@ void BitMapHandler::closeBMP()
     if (bitmap.is_open())
     {
         bitmap.close();
+        image.clear();
     }
 }
 
@@ -67,8 +80,7 @@ unsigned char BitMapHandler::bitextract(const unsigned int byte, const unsigned 
     {
         return 0;
     }
- 
-    // определение количества нулевых бит справа от маски
+
     int maskBufer = mask, maskPadding = 0;
  
     while (!(maskBufer & 1))
@@ -77,6 +89,5 @@ unsigned char BitMapHandler::bitextract(const unsigned int byte, const unsigned 
         maskPadding++;
     }
  
-    // применение маски и смещение
     return (byte & mask) >> maskPadding;
 }

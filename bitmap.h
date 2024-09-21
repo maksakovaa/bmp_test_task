@@ -10,12 +10,12 @@
 class BitMapHandler
 {
 public:
-    BitMapHandler() = default;
-    ~BitMapHandler() = default;
+    BitMapHandler(const std::string& fileName);
+    ~BitMapHandler();
+private:
     void openBMP(const std::string& fileName);
     void displayBMP();
     void closeBMP();
-private:
     unsigned char bitextract(const unsigned int byte, const unsigned int mask);
     std::ifstream bitmap;
     BitmapFileHeader m_header;

@@ -10,10 +10,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        BitMapHandler bmpHandler;
-        bmpHandler.openBMP(argv[argc - 1]);
-        bmpHandler.displayBMP();
-        bmpHandler.closeBMP();
+        BitMapHandler bmpHandler(argv[argc - 1]);
     }
     
     return 0;
