@@ -56,12 +56,16 @@ void BitMapHandler::openBMP(const std::string &fileName)
 
 void BitMapHandler::displayBMP()
 {
-    if (bitmap.is_open())
+    if (bitmap.is_open() && !image.empty())
     {
         for (auto i : image)
         {
             std::cout << i << std::endl;
         }
+    }
+    else
+    {
+        throw std::runtime_error("File not open or image does not read in memory");
     }
 }
 
